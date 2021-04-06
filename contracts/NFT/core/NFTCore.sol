@@ -102,8 +102,8 @@ contract NFTCore is NFTOwnership{
         require(NFTs[_nftId].level <= maxLevel,'Upgraded to the highest level');
         uint upLevel = maxLevel - NFTs[_nftId].level;
         require(_amount >= levelUpFee.mul(upLevel),'No enough money');
-        XMPT.transferFrom(msg.sender,address(this),_amount*9/10);
-        XMPT.transferFrom(msg.sender,address(uint160(teamWallet)),_amount/10);
+        XMPT.transferFrom(msg.sender,address(this),_amount.mul(9).div(10));
+        XMPT.transferFrom(msg.sender,address(uint160(teamWallet)),_amount.div(10));
         NFTs[_nftId].level = uint32(NFTs[_nftId].level.add(upLevel));
         NFTs[_nftId].medal = uint32(NFTs[_nftId].level.div(5));
         uint addPower = _randomByModulus(levelUpPower).add(NFTs[_nftId].quality.mul(levelUpPower));
